@@ -18,24 +18,25 @@ function checkLogin() {
 }
 
 function displayProducts() {
-    console.log("Available Products:");
-    for (let i = 0; i < products.length; i++) {
-        console.log(`${i + 1}. ${products[i].name} - $${products[i].price}`);
-    }
-
-    const choice = quantity(prompt("Enter the number of the product you want to add to cart (or enter 0 to finish shopping):"));
-    if (choice === 0) {
-        return;
-    } else if (choice >= 1 && choice <= products.length) {
-        if (checkLogin()) {
-            const selectedProduct = products[choice - 1];
-            cart.push(selectedProduct);
-            console.log(`${selectedProduct.name} added to cart.`);
+    while (true) {
+        console.log("Available Products:");
+        for (let i = 0; i < products.length; i++) {
+            console.log(`${i + 1}. ${products[i].item} - $${products[i].price}`);
         }
-    } else {
-        console.log("Invalid choice. Please enter a number between 1 and " + products.length);
+
+        const choice = parseInt(prompt("Enter the number of the product you want to add to cart (or enter 0 to finish shopping):"), 10);
+        if (choice === 0) {
+            break;
+        } else if (choice >= 1 && choice <= products.length) {
+            if (checkLogin()) {
+                const selectedProduct = products[choice - 1];
+                cart.push(selectedProduct);
+                console.log(`${selectedProduct.item} added to cart.`);
+            }
+        } else {
+            console.log("Invalid choice. Please enter a number between 1 and " + products.length);
+        }
     }
-    displayProducts();
 }
 
 function totalCost() {
@@ -49,12 +50,13 @@ function totalCost() {
 function viewCart() {
     console.log("Items in your cart:");
     for (let i = 0; i < cart.length; i++) {
-        console.log(`${i + 1}. ${cart[i].name} - $${cart[i].price}`);
+        console.log(`${i + 1}. ${cart[i].item} - $${cart[i].price}`);
     }
     console.log("Total cost: $" + totalCost());
 }
 
-const cart = [];
+const cart = [];  // Declared cart before usage
+
 console.log("Welcome to Pepe's Online Grocery!");
 
 isUserLoggedIn = confirm("Are you logged in?");
@@ -62,6 +64,7 @@ isUserLoggedIn = confirm("Are you logged in?");
 displayProducts();
 
 viewCart();
+
 
 
 //-------------------------------------------------------------------------------
